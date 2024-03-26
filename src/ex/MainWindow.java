@@ -43,28 +43,23 @@ public class MainWindow extends JFrame {
     }
 
     private void onAdd(ActionEvent e) {
-        try {
-            int input1 = Integer.parseInt(op1.getText());
-            int input2 = Integer.parseInt(op2.getText());
-            int res = input1 + input2;
-            result.setText("Risultato: " + res);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"numeri non validi");
-            op1.setText("");
-            op2.setText("");
-        }
+        int res = convertInput(op1) + convertInput(op2);
+        result.setText("Risultato: " + res);
     }
 
-    private void onSubtract(ActionEvent e){
+    private void onSubtract(ActionEvent e) {
+        int res = convertInput(op1) - convertInput(op2);
+        result.setText("Risultato: " + res);
+    }
+
+    private int convertInput(JTextField input) {
         try {
-            int input1 = Integer.parseInt(op1.getText());
-            int input2 = Integer.parseInt(op2.getText());
-            int res = input1 - input2;
-            result.setText("Risultato: " + res);
+            return Integer.parseInt(input.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"numeri non validi");
+            JOptionPane.showMessageDialog(this, "numeri non validi");
             op1.setText("");
             op2.setText("");
-        }        
+            return 0;
+        }
     }
 }
