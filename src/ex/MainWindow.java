@@ -2,6 +2,7 @@ package ex;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.function.ToDoubleBiFunction;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,33 +39,25 @@ public class MainWindow extends JFrame {
         this.add(div);
         this.add(result);
         // ascoltatori
-        add.addActionListener(this::onAdd);
-        sub.addActionListener(this::onSubtract);
+        add.addActionListener(v -> this.calculate((a, b) -> a + b));
+
+        sub.addActionListener(v -> this.calculate((a, b) -> a - b));
+
+        mul.addActionListener(v -> this.calculate((a, b) -> a * b));
+
+        div.addActionListener(v -> this.calculate((a, b) -> (double)a / (double)b));
     }
 
-    private void onAdd(ActionEvent e) {
+    private void calculate(ToDoubleBiFunction<Integer, Integer> func) {
         try {
             int input1 = Integer.parseInt(op1.getText());
             int input2 = Integer.parseInt(op2.getText());
-            int res = input1 + input2;
+            double res = func.applyAsDouble(input1, input2);
             result.setText("Risultato: " + res);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"numeri non validi");
+            JOptionPane.showMessageDialog(this, "numeri non validi");
             op1.setText("");
             op2.setText("");
         }
-    }
-
-    private void onSubtract(ActionEvent e){
-        try {
-            int input1 = Integer.parseInt(op1.getText());
-            int input2 = Integer.parseInt(op2.getText());
-            int res = input1 - input2;
-            result.setText("Risultato: " + res);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"numeri non validi");
-            op1.setText("");
-            op2.setText("");
-        }        
     }
 }
